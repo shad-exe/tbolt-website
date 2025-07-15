@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | T-bOLT Media Planning Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    body {
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%),
+                  url('https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png');
+      background-size: cover, auto;
+      background-repeat: no-repeat, repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .login-white-card, .login-white-card h2, .login-white-card p, .login-white-card label, .login-white-card input, .login-white-card button {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    .login-center-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-white-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 48px 0 rgba(127,83,172,0.18), 0 0 0 8px rgba(127,83,172,0.08);
+      width: 370px;
+      min-height: 480px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0 auto;
+      padding: 2.2rem 2rem 2rem 2rem;
+      overflow: visible;
+      backdrop-filter: blur(16px) saturate(180%);
+      border: 1.5px solid rgba(127,83,172,0.12);
+      background-clip: padding-box;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .login-white-card:hover {
+      box-shadow: 0 24px 64px 0 rgba(127,83,172,0.28), 0 0 0 12px rgba(127,83,172,0.12);
+      transform: translateY(-4px) scale(1.025);
+    }
+    .timeline {
+      position: absolute;
+      left: 50%;
+      top: 110px;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 220px;
+      background: linear-gradient(180deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%);
+      z-index: 0;
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+    .timeline-step {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      width: 90%;
+      max-width: 260px;
+      margin: 0.7rem auto;
+      padding: 1rem 1.2rem 0.7rem 1.2rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .timeline-step label {
+      font-size: 1rem;
+      color: #7f53ac;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+      text-align: left;
+      width: 100%;
+    }
+    .timeline-step input {
+      width: 100%;
+      background: rgba(255,255,255,0.45);
+      border: 1.5px solid #e570e7;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      color: #333;
+      font-size: 1.08rem;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.2rem;
+      padding: 0.5rem 0.8rem;
+    }
+    .timeline-step input:focus {
+      border-color: #53a0fd;
+      box-shadow: 0 0 0 0.2rem rgba(83,160,253,0.18);
+    }
+    .timeline-step .btn-gradient {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 1.12rem;
+      font-weight: 600;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.18);
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%);
+      color: #fff;
+      border: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-step .btn-gradient:hover, .timeline-step .btn-gradient:focus {
+      background: linear-gradient(120deg, #53a0fd 0%, #43e97b 100%);
+      box-shadow: 0 4px 24px rgba(127,83,172,0.22);
+      color: #fff;
+    }
+    .login-white-card .logo {
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2.2rem auto 1.2rem auto;
+      border: 2px solid #eee;
+      position: relative;
+      z-index: 1;
+    }
+    .login-white-card .logo svg {
+      width: 48px;
+      height: 48px;
+      display: block;
+      margin: auto;
+    }
+    .login-white-card h2 {
+      font-family: 'Montserrat',sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #7f53ac;
+      margin-bottom: 0.2rem;
+      text-align: center;
+      margin-top: 0.2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .login-white-card p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .circular-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .circular-form .form-group {
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.2rem;
+      position: relative;
+      background: rgba(255,255,255,0.55);
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      padding: 0.5rem 1rem;
+    }
+    .circular-form label {
+      font-size: 1rem;
+      color: #7f53ac;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+      text-align: left;
+      width: 100%;
+    }
+    .circular-form input {
+      width: 100%;
+      background: rgba(255,255,255,0.45);
+      border: 1.5px solid #e570e7;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      color: #333;
+      font-size: 1.08rem;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.2rem;
+      padding: 0.5rem 0.8rem;
+    }
+    .circular-form input:focus {
+      border-color: #53a0fd;
+      box-shadow: 0 0 0 0.2rem rgba(83,160,253,0.18);
+    }
+    .circular-form .btn-gradient {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 1.12rem;
+      font-weight: 600;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.18);
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%);
+      color: #fff;
+      border: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .circular-form .btn-gradient:hover, .circular-form .btn-gradient:focus {
+      background: linear-gradient(120deg, #53a0fd 0%, #43e97b 100%);
+      box-shadow: 0 4px 24px rgba(127,83,172,0.22);
+      color: #fff;
+    }
+    .login-white-card .logo {
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem auto;
+      border: 2px solid #eee;
+    }
+    .login-white-card .logo svg {
+      width: 38px;
+      height: 38px;
+      display: block;
+      margin: auto;
+    }
+    .login-white-card h2 {
+      font-family: 'Montserrat',sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #7f53ac;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .login-white-card p {
+      color: #555;
+      font-size: 1.08rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    .minimal-logo {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .login-white-card .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      border: 2px solid #eee;
+    }
+    .login-white-card .logo img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+    .login-white-card h2 {
+      font-family: 'Montserrat',sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #7f53ac;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .login-white-card p {
+      color: #555;
+      font-size: 1.08rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    .glass-input {
+      background: rgba(255,255,255,0.45);
+      border: 1.5px solid #e570e7;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.10);
+      color: #333;
+      font-size: 1.08rem;
+      position: relative;
+      z-index: 1;
+    }
+    .glass-input:focus {
+      border-color: #53a0fd;
+      box-shadow: 0 0 0 0.2rem rgba(83,160,253,0.18);
+    }
+    .btn-gradient {
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%);
+      color: #fff;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.18);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s, box-shadow 0.3s;
+      outline: none;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .btn-gradient:hover, .btn-gradient:focus {
+      background: linear-gradient(120deg, #53a0fd 0%, #43e97b 100%);
+      box-shadow: 0 4px 24px rgba(127,83,172,0.22);
+      color: #fff;
+    }
+    .tbolt-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 100%);
+      box-shadow: 0 4px 24px rgba(127,83,172,0.18);
+      display: inline-block;
+      padding: 8px;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-center-wrap">
+    <div class="login-white-card">
+      <div class="logo" style="margin-bottom:0.5rem;">
+        <span class="d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:#f5f5f5;border-radius:50%;box-shadow:0 2px 12px rgba(127,83,172,0.10);">
+          <svg id="logoSVG" xmlns="http://www.w3.org/2000/svg" width="38" height="38" style="display:block;vertical-align:middle;" viewBox="0 0 16 16">
+            <defs>
+              <linearGradient id="logoGradientGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FFD700"/>
+                <stop offset="50%" stop-color="#FFC300"/>
+                <stop offset="100%" stop-color="#FFA500"/>
+              </linearGradient>
+            </defs>
+            <path id="logoPath" d="M11.251 0a.5.5 0 0 1 .471.669L9.825 5H13.5a.5.5 0 0 1 .39.812l-8.5 10.5c-.345.426-.985-.021-.81-.53L6.175 11H2.5a.5.5 0 0 1-.39-.812l8.5-10.5A.5.5 0 0 1 11.251 0z" fill="url(#logoGradientGold)"/>
+          </svg>
+        </span>
+      </div>
+      <h2>T-bOLT</h2>
+      <p>Welcome back! Please sign in to continue.</p>
+      <form id="loginForm" style="width:100%">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control glass-input" id="username" required autocomplete="username">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control glass-input" id="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-gradient w-100 fw-bold">Login</button>
+      </form>
+      <div id="loginMessage" class="alert alert-danger mt-3 text-center p-2" style="display:none;" role="alert" aria-live="assertive"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    var loginForm = document.getElementById('loginForm');
+    var usernameInput = document.getElementById('username');
+    var passwordInput = document.getElementById('password');
+    var messageDiv = document.getElementById('loginMessage');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var username = usernameInput.value.trim();
+      var password = passwordInput.value.trim();
+      if (username && password && username === password) {
+        window.location.href = 'index.html';
+      } else {
+        messageDiv.textContent = 'Invalid username or password.';
+        messageDiv.style.display = 'block';
+      }
+    });
+
+    usernameInput.addEventListener('input', function() {
+      messageDiv.style.display = 'none';
+    });
+    passwordInput.addEventListener('input', function() {
+      messageDiv.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* Custom styles for T-bOLT Media Planning Hub */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.navbar-brand {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+header {
+  background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+  color: #fff;
+}
+footer {
+  background: #007bff;
+  color: #fff;
+}

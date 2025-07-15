@@ -1,0 +1,422 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-pRIME | Media Planning Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    html, body, * {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    body {
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%),
+                  url('https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png');
+      background-size: cover, auto;
+      background-repeat: no-repeat, repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .tool-card {
+      background: #fff !important;
+      border-radius: 28px;
+      box-shadow: 0 8px 24px 0 rgba(127,83,172,0.10);
+      border: 1.5px solid #f3f3f3;
+      position: relative;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 2.2rem 2.2rem 1.2rem 2.2rem;
+      overflow: visible;
+      transition: box-shadow 0.18s, transform 0.18s, border 0.18s;
+      text-align: center;
+      width:900px;
+      height:400px;
+      max-width:98vw;
+      max-height:400px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+    .tool-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 16px 40px 0 rgba(127,83,172,0.12);
+      border: 1.5px solid #eaeaea;
+    }
+    .step-indicator {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: linear-gradient(90deg,#7f53ac,#53a0fd);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 4px 14px;
+      box-shadow: 0 2px 8px #7f53ac22;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      text-shadow: 0 2px 12px #e570e722;
+      margin-bottom: 0.5rem;
+    }
+    .tool-desc {
+      font-size: 1.15rem;
+      color: #444;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      line-height: 1.6;
+    }
+    @media (max-width: 767px) {
+      .tool-card {
+        width: 98vw;
+        min-width: 98vw;
+        max-width: 98vw;
+        height: auto;
+        min-height: 320px;
+        max-height: none;
+        padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body style="font-family: 'Montserrat', sans-serif; min-height:100vh;">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: #fff; height:48px; z-index:1040;">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2 brand-gradient-hover" href="index.html">
+        <svg id="logoSVG" xmlns="http://www.w3.org/2000/svg" width="28" height="28" style="vertical-align:middle; margin-right:4px;" viewBox="0 0 16 16">
+          <defs>
+            <linearGradient id="logoGradientPurple" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7f53ac"/>
+              <stop offset="100%" stop-color="#647dee"/>
+            </linearGradient>
+            <linearGradient id="logoGradientYellow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffe259"/>
+              <stop offset="100%" stop-color="#ffa751"/>
+            </linearGradient>
+          </defs>
+          <path id="logoPath" d="M11.251 0a.5.5 0 0 1 .471.669L9.825 5H13.5a.5.5 0 0 1 .39.812l-8.5 10.5c-.345.426-.985-.021-.81-.53L6.175 11H2.5a.5.5 0 0 1-.39-.812l8.5-10.5A.5.5 0 0 1 11.251 0z" fill="url(#logoGradientPurple)"/>
+        </svg>
+        <span class="fw-bold brand-gradient-text" style="font-size:1.3rem; letter-spacing:2px; background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; display: inline-block;">T-pRIME</span>
+      </a>
+      <button class="btn btn-light ms-3" id="logoutBtn" style="font-weight:500; border:none; border-radius:6px; color:#7f53ac !important;">Logout</button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color:#7f53ac; font-weight:400;">Home</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="features.html" style="color:#7f53ac; font-weight:400;">Features</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link active" href="tools.html" style="background:#f3f3f3; color:#7f53ac; font-weight:700; border-radius:6px; padding:6px 16px;">Tools</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" style="color:#7f53ac; font-weight:400;">About Me</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" style="color:#7f53ac; font-weight:400;">Contact Me</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="vault.html" style="color:#7f53ac; font-weight:400;">Secret Vault</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main class="container-fluid" style="padding:0; margin:0; min-height:calc(100vh - 96px); display:flex; align-items:center; justify-content:center;">
+    <div class="d-flex justify-content-center align-items-center w-100" style="height:100vh; min-height:0;">
+      <div id="workflowCard" class="tool-card" style="background:#fff; width:900px; max-width:98vw; max-height:900px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; text-align:center; padding:2.2rem;"></div>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    let primeData = null;
+    let spotsData = null;
+    let current = 0;
+    const cards = [
+      {
+        step: 'Note',
+        indicatorStyle: 'background:linear-gradient(90deg,#7f53ac,#e570e7);',
+        icon: '<i class="bi bi-journal-text"></i>',
+        title: 'Instructions & Required Headers',
+        desc: 'To process T-pRIME, your files must have the following columns and formats:',
+        list: `<ul style='font-size:0.98rem; color:#444; text-align:left; margin:0 auto; max-width:600px; padding:0 12px;'>
+          <li><b style='color:#7f53ac;'>Prime Lookup Sheet:</b> Channel, Region, Prime, Sub-Prime, Broad-Prime, FTA/NFTA (Excel/CSV)</li>
+          <li><b style='color:#7f53ac;'>BARC Dump Sheet:</b> Channel, Regions, Buying, M15+, Brand (Excel/CSV)</li>
+          <li><b style='color:#7f53ac;'>Note:</b> All columns must match exactly for successful processing.</li>
+        </ul>`,
+        extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+          <span style='flex:1; text-align:left;'> </span>
+          <span style='flex:1; text-align:right;'><button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 2.2rem; border-radius:14px;'>Next</button></span>
+        </div>`
+      },
+      {
+        step: 'Step 1',
+        indicatorStyle: '',
+        icon: '<i class="bi bi-file-earmark-arrow-up"></i>',
+        title: 'Upload Prime Lookup Sheet',
+        desc: 'Upload your <b>Prime Lookup</b> file (Excel/CSV). Required columns: Channel, Region, Prime, Sub-Prime, Broad-Prime, FTA/NFTA.',
+        list: `<div id='primeUploadArea' class='border border-2 border-dashed mb-2 mx-auto d-flex flex-column align-items-center justify-content-center upload-area-btn' style='background:#f8f8ff; width:100%; max-width:320px; min-height:90px; padding:12px 12px 8px 12px; border-radius:14px; cursor:pointer; transition:background 0.18s;'>
+          <input type='file' id='primeFileInput' accept='.xlsx,.csv' style='display:none;'>
+          <span class='form-label mb-1' style='font-size:0.90rem; color:#7f53ac; font-weight:500;'>Click or drag to upload</span>
+          <span id='primeFileName' class='text-secondary mb-1' style='font-size:0.86rem; text-align:center;'></span>
+          <span class='text-muted' style='font-size:0.78rem; text-align:center;'>Excel/CSV only</span>
+        </div>
+        <button id='processPrimeBtn' class='btn btn-warning' style='background:#ffc107;border:none; padding:0.5rem 2.2rem; font-size:0.96rem; color:#fff; border-radius:14px; margin-bottom:1rem;'>Process Lookup</button>`,
+        extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+          <span style='flex:1; text-align:left;'><button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 2.2rem; border-radius:14px;'>Previous</button></span>
+          <span style='flex:1; text-align:right;'><button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 2.2rem; border-radius:14px;'>Next</button></span>
+        </div>`
+      },
+      {
+        step: 'Step 2',
+        indicatorStyle: '',
+        icon: '<i class="bi bi-file-earmark-bar-graph"></i>',
+        title: 'Upload Spots Data',
+        desc: 'Upload your <b>Spots Data</b> file (Excel/CSV). Required columns: Channels, Time-Band, Day, Spots.',
+        list: `<div id='spotsUploadArea' class='border border-2 border-dashed mb-2 mx-auto d-flex flex-column align-items-center justify-content-center upload-area-btn' style='background:#f8f8ff; width:100%; max-width:320px; min-height:90px; padding:12px 12px 8px 12px; border-radius:14px; cursor:pointer; transition:background 0.18s;'>
+          <input type='file' id='spotsFileInput' accept='.xlsx,.csv' style='display:none;'>
+          <span class='form-label mb-1' style='font-size:0.90rem; color:#7f53ac; font-weight:500;'>Click or drag to upload</span>
+          <span id='spotsFileName' class='text-secondary mb-1' style='font-size:0.86rem; text-align:center;'></span>
+          <span class='text-muted' style='font-size:0.78rem; text-align:center;'>Excel/CSV only</span>
+        </div>
+        <button id='processSpotsBtn' class='btn btn-warning' style='background:#ffc107;border:none; padding:0.5rem 2.2rem; font-size:0.96rem; color:#fff; border-radius:14px; margin-bottom:1rem;'>Process Spots</button>`,
+        extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+          <span style='flex:1; text-align:left;'><button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 2.2rem; border-radius:14px;'>Previous</button></span>
+          <span style='flex:1; text-align:right;'><button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 2.2rem; border-radius:14px;'>Next</button></span>
+        </div>`
+      },
+      {
+        step: 'Step 3',
+        indicatorStyle: '',
+        icon: '<i class="bi bi-bar-chart-steps"></i>',
+        title: 'Download Output',
+        desc: 'After processing, download the <b>T-pRIME Output</b> file.',
+        list: `<button id='downloadBtn' class='btn btn-success' style='background:linear-gradient(90deg,#43e97b,#53a0fd);border:none; padding:0.5rem 2.2rem; font-size:0.96rem; color:#fff; border-radius:14px; margin-bottom:1rem; display:none;'>Download Output</button>
+        <a id='downloadLink' style='display:none'></a>`,
+        extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+          <span style='flex:1; text-align:left;'><button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 2.2rem; border-radius:14px;'>Previous</button></span>
+          <span style='flex:1; text-align:right;'></span>
+        </div>`
+      }
+    ];
+
+    function renderCard(idx) {
+      const card = cards[idx];
+      document.getElementById('workflowCard').innerHTML = `
+        <span class='step-indicator' style='${card.indicatorStyle}'>${card.step}</span>
+        <span style='font-size:2rem; background:linear-gradient(120deg,#7f53ac 0%,#e570e7 60%,#53a0fd 100%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; display:inline-block; margin:0 auto 0.7rem auto;'>${card.icon}</span>
+        <div class='card-title'>${card.title}</div>
+        <div class='tool-desc'>${card.desc}</div>
+        ${card.list}
+        ${card.extra}
+      `;
+      if(document.getElementById('nextBtn')) {
+        document.getElementById('nextBtn').onclick = () => { if(current < cards.length-1) { current++; renderCard(current); } };
+      }
+      if(document.getElementById('prevBtn')) {
+        document.getElementById('prevBtn').onclick = () => { if(current > 0) { current--; renderCard(current); } };
+      }
+      // Step 1: Prime Lookup Upload
+      if(idx === 1) {
+        setTimeout(() => {
+          setupFileUpload(document.getElementById('primeUploadArea'), document.getElementById('primeFileInput'), document.getElementById('primeFileName'), handlePrimeFileSelect);
+          document.getElementById('processPrimeBtn').onclick = function() {
+            if (!primeData) return alert('Please upload Prime Lookup file first');
+            this.textContent = 'Processed';
+            this.classList.remove('btn-warning');
+            this.classList.add('btn-success');
+          };
+        }, 0);
+      }
+      // Step 2: Spots Data Upload
+      if(idx === 2) {
+        setTimeout(() => {
+          setupFileUpload(document.getElementById('spotsUploadArea'), document.getElementById('spotsFileInput'), document.getElementById('spotsFileName'), handleSpotsFileSelect);
+          document.getElementById('processSpotsBtn').onclick = function() {
+            if (!spotsData || !primeData) return alert('Please upload both files and process Prime Lookup first');
+            const processedData = processDataWithPrime(spotsData, primeData);
+            createExcelFile(processedData);
+            document.getElementById('downloadBtn').style.display = 'block';
+            this.textContent = 'Processed';
+            this.classList.remove('btn-warning');
+            this.classList.add('btn-success');
+          };
+        }, 0);
+      }
+      // Step 3: Download Output
+      if(idx === 3) {
+        setTimeout(() => {
+          document.getElementById('downloadBtn').onclick = function() {
+            document.getElementById('downloadLink').click();
+          };
+        }, 0);
+      }
+    }
+
+    function setupFileUpload(uploadArea, fileInput, fileNameDisplay, handler) {
+      uploadArea.addEventListener('click', () => fileInput.click());
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('border-primary');
+      });
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('border-primary');
+      });
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('border-primary');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          handler(files[0]);
+        }
+      });
+      fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          handler(file);
+        }
+      });
+    }
+
+    function handlePrimeFileSelect(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+          primeData = XLSX.utils.sheet_to_json(worksheet);
+          document.getElementById('primeFileName').textContent = file.name;
+        } catch (error) {
+          document.getElementById('primeFileName').textContent = 'Invalid file format';
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function handleSpotsFileSelect(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+          spotsData = XLSX.utils.sheet_to_json(worksheet);
+          document.getElementById('spotsFileName').textContent = file.name;
+        } catch (error) {
+          document.getElementById('spotsFileName').textContent = 'Invalid file format';
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function processDataWithPrime(data, primeLookup) {
+      const primeMap = {};
+      primeLookup.forEach(row => {
+        const channel = (row.Channel || row.channel || row.Channels || row.channels || '').toString().trim();
+        const prime = (row.Prime || row.prime || '').toString().trim();
+        if (channel && prime) {
+          primeMap[channel.toLowerCase()] = prime;
+        }
+      });
+      return data.map((row, index) => {
+        const channel = (row.Channels || row.Channel || row.channel || '').toString().trim();
+        let timeBand = (row['Time-Band'] || row.TimeBand || row.timeband || '').toString().trim();
+        let day = (row.Day || row.day || '').toString().trim();
+        const spots = parseInt(row.Spots || row.spots || row['Spot/GRP'] || 0);
+        const cleanedTimeBand = timeBand;
+        const cleanedDay = day;
+        const prime = primeMap[channel.toLowerCase()] || 'Unknown';
+        const ptNptResult = classifyPTNPTByPrime(cleanedTimeBand, prime, cleanedDay);
+        const ptSpots = ptNptResult.isPrimeTime ? spots : 0;
+        const nptSpots = ptNptResult.isPrimeTime ? 0 : spots;
+        let remarks = [];
+        if (!channel) remarks.push('Missing channel name');
+        if (!cleanedTimeBand || cleanedTimeBand === timeBand && ptNptResult.reason && ptNptResult.reason.includes('Invalid')) {
+          remarks.push('Invalid time-band format');
+        }
+        if (!spots || spots === 0) remarks.push('No spots data available');
+        if (prime === 'Unknown') remarks.push(`Channel "${channel}" not found in prime lookup`);
+        if (ptNptResult.reason && ptNptResult.reason !== 'Successfully classified') {
+          remarks.push(ptNptResult.reason);
+        }
+        return {
+          'Serial Number': row['Serial Number'] || row.SerialNumber || index + 1,
+          'Channels': channel,
+          'Prime': prime,
+          'Time-Band': cleanedTimeBand,
+          'Day': cleanedDay,
+          'Spots': spots,
+          'PT Spots': ptSpots,
+          'NPT Spots': nptSpots,
+          'Remarks': remarks.length > 0 ? remarks.join('; ') : ''
+        };
+      });
+    }
+
+    function classifyPTNPTByPrime(timeBand, prime, day) {
+      if (!timeBand) {
+        return { isPrimeTime: false, reason: 'No time-band specified' };
+      }
+      const timeMatch = timeBand.match(/(\d{1,2}):?(\d{2})?-(\d{1,2}):?(\d{2})?/);
+      if (!timeMatch) {
+        return { isPrimeTime: false, reason: 'Invalid time-band format' };
+      }
+      let startHour = parseInt(timeMatch[1]);
+      let endHour = parseInt(timeMatch[3]);
+      if (startHour === 24) startHour = 0;
+      if (startHour === 25) startHour = 1;
+      if (endHour === 24) endHour = 0;
+      if (endHour === 25) endHour = 1;
+      if (startHour < 0 || startHour > 25 || endHour < 0 || endHour > 25) {
+        return { isPrimeTime: false, reason: 'Invalid time values (must be 0-25)' };
+      }
+      const normalizedStartHour = startHour > 23 ? startHour - 24 : startHour;
+      let isPrimeTime = false;
+      if (prime.toLowerCase().includes('prime')) {
+        isPrimeTime = normalizedStartHour >= 19 && normalizedStartHour < 23;
+      } else if (prime.toLowerCase().includes('sub-prime')) {
+        isPrimeTime = normalizedStartHour >= 17 && normalizedStartHour < 19;
+      } else {
+        isPrimeTime = normalizedStartHour >= 19 && normalizedStartHour < 23;
+      }
+      return { isPrimeTime, reason: 'Successfully classified' };
+    }
+
+    function createExcelFile(processedData) {
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(processedData);
+      ws['!cols'] = [
+        {wch: 15},
+        {wch: 25},
+        {wch: 20},
+        {wch: 15},
+        {wch: 10},
+        {wch: 10},
+        {wch: 12},
+        {wch: 12},
+        {wch: 40}
+      ];
+      XLSX.utils.book_append_sheet(wb, ws, 'T-pRIME_Analysis');
+      const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'array'});
+      const blob = new Blob([wbout], {type: 'application/octet-stream'});
+      const url = URL.createObjectURL(blob);
+      document.getElementById('downloadLink').href = url;
+    }
+
+    renderCard(current);
+  </script>
+  </body>
+</html>

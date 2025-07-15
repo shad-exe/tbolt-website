@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-bOLT | Media Planning Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .fixed-chart-container {
+      width: 100%;
+      max-width: 340px;
+      height: 220px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #7f53ac22;
+      padding: 8px;
+    }
+    html, body, * {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    body {
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 40%, #53a0fd 70%, #43e97b 100%),
+                  url('https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png');
+      background-size: cover, auto;
+      background-repeat: no-repeat, repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .glass-card, .tool-card {
+      background: #fff !important;
+      border-radius: 28px;
+      box-shadow: 0 8px 24px 0 rgba(127,83,172,0.10);
+      border: 1.5px solid #f3f3f3;
+      position: relative;
+        document.getElementById('workflowCard').innerHTML = `
+          <span class='step-indicator' style='${card.indicatorStyle}'>${card.step}</span>
+          <span style='font-size:2rem; background:linear-gradient(120deg,#7f53ac 0%,#e570e7 60%,#53a0fd 100%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; display:inline-block; margin:0 auto 0.7rem auto;'>${card.icon}</span>
+          <div class='card-title'>${card.title}</div>
+          <div class='tool-desc'>${card.desc}</div>
+          ${card.list}
+          ${card.extra}
+        `;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 2.2rem 2.2rem 1.2rem 2.2rem;
+      overflow: visible;
+      transition: box-shadow 0.18s, transform 0.18s, border 0.18s;
+      text-align: center;
+    }
+    @media (max-width: 767px) {
+      .glass-card, .tool-card {
+        width: 98vw;
+        min-width: 98vw;
+        max-width: 98vw;
+        height: auto;
+        min-height: 320px;
+        max-height: none;
+        padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+      }
+    }
+    .glass-card::before, .tool-card::before {
+      display: none !important;
+    }
+    .glass-card:hover, .tool-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 16px 40px 0 rgba(127,83,172,0.12);
+      border: 1.5px solid #eaeaea;
+    }
+    .tool-icon {
+      font-size: 2.7rem;
+      background: linear-gradient(120deg, #7f53ac 0%, #e570e7 60%, #53a0fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      margin-bottom: 0.7rem;
+      filter: drop-shadow(0 2px 8px #e570e7aa);
+      border-radius: 50%;
+      background-color: #f3f3f3;
+      padding: 0.5rem;
+      box-shadow: 0 2px 8px #7f53ac22;
+      position: relative;
+      z-index: 1;
+    }
+    .step-indicator {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: linear-gradient(90deg,#7f53ac,#53a0fd);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 4px 14px;
+      box-shadow: 0 2px 8px #7f53ac22;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      text-shadow: 0 2px 12px #e570e722;
+      margin-bottom: 0.5rem;
+    }
+    .tool-desc {
+      font-size: 1.15rem;
+      color: #444;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      line-height: 1.6;
+    }
+    .card-scroll-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 1.5rem;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: #7f53ac #e570e7;
+      background: linear-gradient(90deg, #f3f3f3 0%, #e570e7 100%);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px 0 #7f53ac22;
+      transition: box-shadow 0.18s;
+    }
+    .card-scroll-row::-webkit-scrollbar {
+      height: 8px;
+      background: #e570e7;
+      border-radius: 8px;
+    }
+    .card-scroll-row::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #7f53ac 0%, #53a0fd 100%);
+      border-radius: 8px;
+    }
+    .card-scroll-row::-webkit-scrollbar-track {
+      background: #f3f3f3;
+      border-radius: 8px;
+    }
+    @media (max-width: 767px) {
+      .glass-card, .tool-card {
+        min-height: 220px;
+        padding: 1.5rem 1rem 1rem 1rem;
+      }
+      .tool-icon {
+        font-size: 2rem;
+      }
+      .card-scroll-row {
+        gap: 1rem;
+        padding-bottom: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: #fff; height:48px; z-index:1040;">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2 brand-gradient-hover" href="index.html">
+        <svg id="logoSVG" xmlns="http://www.w3.org/2000/svg" width="28" height="28" style="vertical-align:middle; margin-right:4px;" viewBox="0 0 16 16">
+          <defs>
+            <linearGradient id="logoGradientPurple" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7f53ac"/>
+              <stop offset="100%" stop-color="#647dee"/>
+            </linearGradient>
+            <linearGradient id="logoGradientYellow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffe259"/>
+              <stop offset="100%" stop-color="#ffa751"/>
+            </linearGradient>
+          </defs>
+          <path id="logoPath" d="M11.251 0a.5.5 0 0 1 .471.669L9.825 5H13.5a.5.5 0 0 1 .39.812l-8.5 10.5c-.345.426-.985-.021-.81-.53L6.175 11H2.5a.5.5 0 0 1-.39-.812l8.5-10.5A.5.5 0 0 1 11.251 0z" fill="url(#logoGradientPurple)"/>
+        </svg>
+        <span class="fw-bold brand-gradient-text" style="font-size:1.3rem; letter-spacing:2px; background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; display: inline-block;">T-sHARE</span>
+      </a>
+      <button class="btn btn-light ms-3" id="logoutBtn" style="font-weight:500; border:none; border-radius:6px; color:#7f53ac !important;">Logout</button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html" style="color:#7f53ac; font-weight:400;">Home</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="features.html" style="color:#7f53ac; font-weight:400;">Features</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link active" href="tools.html" style="background:#f3f3f3; color:#7f53ac; font-weight:700; border-radius:6px; padding:6px 16px;">Tools</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" style="color:#7f53ac; font-weight:400;">About Me</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" style="color:#7f53ac; font-weight:400;">Contact Me</a></li>
+          <li style="height:32px; display:flex; align-items:center;"><span style="border-left:1.5px solid #7f53ac; height:24px; margin:0 10px;"></span></li>
+          <li class="nav-item"><a class="nav-link" href="vault.html" style="color:#7f53ac; font-weight:400;">Secret Vault</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main class="container-fluid" style="padding:0; margin:0; min-height:calc(100vh - 96px); display:flex; align-items:center; justify-content:center;">
+    <div class="d-flex justify-content-center align-items-center w-100" style="height:100vh; min-height:0;">
+      <div id="workflowCard" class="tool-card" style="background:#fff; width:900px; height:400px; max-width:98vw; max-height:400px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; text-align:center;">
+        <!-- Card content will be injected by JS -->
+      </div>
+    </div>
+    <script>
+      const cards = [
+        {
+          step: 'Note',
+          indicatorStyle: 'background:linear-gradient(90deg,#7f53ac,#e570e7);',
+          icon: '<i class="bi bi-journal-text"></i>',
+          iconStyle: 'background-color:#f3f3f3; color:#7f53ac;',
+          title: 'Instructions & Required Headers',
+          desc: 'To process Channel Share, your files must have the following columns and formats:',
+          list: `<ul style='font-size:0.98rem; color:#444; text-align:left; margin:0 auto; max-width:600px; padding:0 12px;'>
+            <li><b style='color:#7f53ac;'>Genre Lookup Sheet:</b> Channel, Region, Genre, Sub-Genre, Broad-Genre, FTA/NFTA (Excel/CSV)</li>
+            <li><b style='color:#7f53ac;'>BARC Dump Sheet:</b> Channel, Regions, Buying, M15+, Brand (Excel/CSV)</li>
+            <li><b style='color:#7f53ac;'>Note:</b> All columns must match exactly for successful processing.</li>
+          </ul>`,
+          extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+            <span style='flex:1; text-align:left;'> </span>
+            <span style='flex:1; text-align:right;'><button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 2.2rem; border-radius:14px;'>Next</button></span>
+          </div>`,
+          buttons: '',
+        },
+        {
+          step: 'Step 1',
+          indicatorStyle: '',
+          icon: '<i class="bi bi-file-earmark-arrow-up"></i>',
+          iconStyle: 'background-color:#e570e7; color:#fff;',
+          title: 'Upload Genre Lookup',
+          desc: `<span style='font-size:0.96rem; color:#444;'>Upload your <b>Genre Lookup</b> file (Excel/CSV). <br>Make sure you <b>rename the headers exactly as below</b> (case and spacing must match):</span>
+          <span style='font-size:0.92rem; color:#7f53ac; margin:8px 0 0 0; display:inline-block;'>Channel, Region, Genre, Sub-Genre, Broad-Genre, FTA/NFTA</span>`,
+          list: `<div class='d-flex flex-column align-items-center justify-content-center w-100' style='gap:10px;'>
+            <div id='genreUploadArea' class='border border-2 border-dashed mb-2 mx-auto d-flex flex-column align-items-center justify-content-center upload-area-btn' style='background:#f8f8ff; width:100%; max-width:320px; min-height:90px; padding:12px 12px 8px 12px; border-radius:14px; cursor:pointer; transition:background 0.18s;'>
+              <input type='file' id='genreFileInput' accept='.xlsx,.csv' style='display:none;'>
+              <span class='form-label mb-1' style='font-size:0.90rem; color:#7f53ac; font-weight:500;'>Click or drag to upload</span>
+              <span id='genreFileName' class='text-secondary mb-1' style='font-size:0.86rem; text-align:center;'></span>
+              <span class='text-muted' style='font-size:0.78rem; text-align:center;'>Excel/CSV only</span>
+            </div>
+            <div class='btn-group w-100 justify-content-center' role='group' aria-label='Step 1 Actions' style='gap:12px;'>
+              <button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 1.2rem; font-size:0.96rem; border-radius:14px;'>Previous</button>
+              <button id='processGenreBtn' class='btn btn-warning' style='background:#ffc107;border:none; padding:0.5rem 1.2rem; font-size:0.96rem; color:#fff; border-radius:14px;'>Process</button>
+              <button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 1.2rem; font-size:0.96rem; border-radius:14px;'>Next</button>
+            </div>
+          </div>`,
+          extra: '',
+        },
+        {
+          step: 'Step 2',
+          indicatorStyle: '',
+          icon: '<i class="bi bi-file-earmark-bar-graph"></i>',
+          iconStyle: 'background-color:#53a0fd; color:#fff;',
+          title: 'Upload BARC Dump',
+          desc: `<span style='font-size:0.96rem; color:#444;'>Upload your <b>BARC Dump</b> file (Excel/CSV). <br>Make sure you <b>rename the headers exactly as below</b> (case and spacing must match):</span>
+          <span style='font-size:0.92rem; color:#7f53ac; margin:8px 0 0 0; display:inline-block;'>Channel, Regions, Buying, M15+, Brand</span>`,
+          list: `<div class='d-flex flex-column align-items-center justify-content-center w-100' style='gap:10px;'>
+            <div id='barcUploadArea' class='border border-2 border-dashed mb-2 mx-auto d-flex flex-column align-items-center justify-content-center upload-area-btn' style='background:#f8f8ff; width:100%; max-width:320px; min-height:90px; padding:12px 12px 8px 12px; border-radius:14px; cursor:pointer; transition:background 0.18s;'>
+              <span class='form-label mb-1' style='font-size:0.90rem; color:#7f53ac; font-weight:500;'>Click or drag to upload</span>
+              <span id='barcFileName' class='text-secondary mb-1' style='font-size:0.86rem; text-align:center;'></span>
+              <span class='text-muted' style='font-size:0.78rem; text-align:center;'>Excel/CSV only</span>
+            </div>
+            <div class='btn-group w-100 justify-content-center' role='group' aria-label='Step 2 Actions' style='gap:12px;'>
+              <button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 1.2rem; font-size:0.96rem; border-radius:14px;'>Previous</button>
+              <button id='processBarcBtn' class='btn btn-warning' style='background:#ffc107;border:none; padding:0.5rem 1.2rem; font-size:0.96rem; color:#fff; border-radius:14px;'>Process</button>
+              <button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 1.2rem; font-size:0.96rem; border-radius:14px;'>Next</button>
+            </div>
+          </div>`,
+          extra: ``,
+        },
+        {
+          step: 'Step 3',
+          indicatorStyle: '',
+          icon: '<i class="bi bi-list-check"></i>',
+          iconStyle: 'background-color:#43e97b; color:#fff;',
+          title: 'Required Columns',
+          desc: `<span style='font-size:0.98rem; color:#444;'>Select which additional columns from Genre Lookup you want to add to the final output. <br>BARC Dump columns will remain as is; selected columns will be appended to each row in the output file.</span>`,
+          list: `<form id='outputColumnsForm' class='d-flex flex-row flex-wrap justify-content-center align-items-center' style='gap:18px; margin-top:18px;'>
+            <div class='form-check'>
+              <input class='form-check-input' type='checkbox' value='Genre' id='colGenre' checked>
+              <label class='form-check-label' for='colGenre' style='font-size:0.98rem; color:#7f53ac;'>Genre</label>
+            </div>
+            <div class='form-check'>
+              <input class='form-check-input' type='checkbox' value='Sub-Genre' id='colSubGenre' checked>
+              <label class='form-check-label' for='colSubGenre' style='font-size:0.98rem; color:#7f53ac;'>Sub-Genre</label>
+            </div>
+            <div class='form-check'>
+              <input class='form-check-input' type='checkbox' value='Region' id='colRegion' checked>
+              <label class='form-check-label' for='colRegion' style='font-size:0.98rem; color:#7f53ac;'>Region</label>
+            </div>
+            <div class='form-check'>
+              <input class='form-check-input' type='checkbox' value='Broad-Genre' id='colBroadGenre' checked>
+              <label class='form-check-label' for='colBroadGenre' style='font-size:0.98rem; color:#7f53ac;'>Broad-Genre</label>
+            </div>
+            <div class='form-check'>
+              <input class='form-check-input' type='checkbox' value='FTA/NFTA' id='colFtaNfta' checked>
+              <label class='form-check-label' for='colFtaNfta' style='font-size:0.98rem; color:#7f53ac;'>FTA/NFTA</label>
+            </div>
+          </form>`,
+          extra: `<div class='d-flex justify-content-between align-items-center mt-4 px-4' style='width:100%;'>
+            <span style='flex:1; text-align:left;'><button id='prevBtn' class='btn btn-outline-secondary' style='padding:0.5rem 2.2rem; border-radius:14px;'>Previous</button></span>
+            <span style='flex:1; text-align:right;'><button id='nextBtn' class='btn btn-primary' style='background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 2.2rem; border-radius:14px;'>Next</button></span>
+          </div>`,
+        },
+        {
+          step: 'Step 4',
+          indicatorStyle: '',
+          icon: '<i class="bi bi-bar-chart-steps"></i>',
+          iconStyle: 'background-color:#ffe259; color:#7f53ac;',
+          title: 'Download & View Dashboard',
+          desc: 'After processing, download the <b>Channel Share</b> output and view the dashboard for insights.',
+          list: '',
+          extra: `<div class='btn-group w-100 justify-content-center' role='group' aria-label='Step 4 Actions' style='gap:12px; margin-top:18px;'>
+            <button id='prevBtn' class='btn btn-outline-secondary step4-btn' style='width:180px; border-radius:14px; padding:0.5rem 1.2rem; font-size:0.96rem;'>Previous</button>
+            <button id='downloadBtn' class='btn btn-success step4-btn' style='width:180px; border-radius:14px; background:linear-gradient(90deg,#ff9800,#ff5e62);border:none; padding:0.5rem 1.2rem; font-size:0.96rem; color:#fff;'>Download Channel Share</button>
+            <button id='dashboardBtn' class='btn btn-primary step4-btn' style='width:180px; border-radius:14px; background:linear-gradient(90deg,#7f53ac,#647dee);border:none; padding:0.5rem 1.2rem; font-size:0.96rem; color:#fff;'>View Dashboard</button>
+          </div>`,
+        }
+      ];
+let current = 0;
+let selectedFile = null;
+function renderCard(idx) {
+        // Step 4: Download logic and dashboard button
+        if(idx === 4) {
+          setTimeout(() => {
+            const downloadBtn = document.getElementById('downloadBtn');
+            if(downloadBtn) {
+              downloadBtn.onclick = function() {
+                // ...existing download logic...
+                function runDownload() {
+                  const selectedCols = window.selectedGenreCols || ['Genre','Sub-Genre','Region','Broad-Genre','FTA/NFTA'];
+                  if(!window.genreLookupData || !window.barcDumpData) {
+                    downloadBtn.textContent = 'Error - Please process both files';
+                    downloadBtn.className = 'btn btn-danger';
+                    downloadBtn.style.background = '#dc3545';
+                    downloadBtn.style.color = '#fff';
+                    setTimeout(() => {
+                      downloadBtn.textContent = 'Download Channel Share';
+                      downloadBtn.className = 'btn btn-success';
+                      downloadBtn.style.background = 'linear-gradient(90deg,#43e97b,#53a0fd)';
+                      downloadBtn.style.color = '#fff';
+                    }, 1800);
+                    return;
+                  }
+                  const genreMap = {};
+                  window.genreLookupData.forEach(row => {
+                    const key = (row.Channel || '').trim().toLowerCase();
+                    genreMap[key] = row;
+                  });
+                  const regionGroups = {};
+                  window.barcDumpData.forEach(row => {
+                    const channelVal = (row.Channel || '').trim().toLowerCase();
+                    const brandVal = (row.Brand || '').trim().toLowerCase();
+                    const regionsVal = (row.Regions || '').trim().toLowerCase();
+                    if(channelVal === 'total' || brandVal === 'total' || regionsVal === 'total') return;
+                    const region = (row.Regions || '').trim();
+                    if(!regionGroups[region]) regionGroups[region] = [];
+                    regionGroups[region].push(row);
+                  });
+                  const wb = XLSX.utils.book_new();
+                  let sheetIdx = 1;
+                  Object.keys(regionGroups).forEach(region => {
+                    const headerOrder = ['Channel', ...selectedCols, 'Brand', 'Buying', 'M15+'];
+                    const rows = regionGroups[region].map(barcRow => {
+                      const channelKey = (barcRow.Channel || '').trim().toLowerCase();
+                      const genreRow = genreMap[channelKey] || {};
+                      const outRow = {};
+                      outRow['Channel'] = (barcRow['Channel'] || '').trim();
+                      selectedCols.forEach(col => {
+                        outRow[col] = (genreRow[col] || '').trim();
+                      });
+                      ['Brand','Buying','M15+'].forEach(col => {
+                        let val = (barcRow[col] || '').trim();
+                        if(val === '') outRow[col] = '0.00';
+                        else if(/^0+(\.0+)?$/.test(val)) outRow[col] = '0.00';
+                        else if(!isNaN(val) && val !== '') outRow[col] = (parseFloat(val)).toFixed(2);
+                        else outRow[col] = val;
+                      });
+                      return outRow;
+                    });
+                    rows.sort((a, b) => {
+                      // Sort numerically in descending order for Brand, Buying, M15+
+                      const brandA = parseFloat(a.Brand) || 0;
+                      const brandB = parseFloat(b.Brand) || 0;
+                      if (brandA !== brandB) return brandB - brandA;
+                      const buyingA = parseFloat(a.Buying) || 0;
+                      const buyingB = parseFloat(b.Buying) || 0;
+                      if (buyingA !== buyingB) return buyingB - buyingA;
+                      const m15A = parseFloat(a['M15+']) || 0;
+                      const m15B = parseFloat(b['M15+']) || 0;
+                      if (m15A !== m15B) return m15B - m15A;
+                      // If all numeric values are equal, sort Channel alphabetically descending
+                      return b.Channel.localeCompare(a.Channel);
+                    });
+                    const ws = XLSX.utils.json_to_sheet(rows, {header: headerOrder, raw: true});
+                    let sheetName = region || ('Region_' + sheetIdx);
+                    sheetName = sheetName.replace(/[^A-Za-z0-9_\- ]/g, '').substring(0, 31) || ('Region_' + sheetIdx);
+                    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+                    sheetIdx++;
+                  });
+                  if(wb.SheetNames.length === 0) {
+                    downloadBtn.textContent = 'Error - No output rows';
+                    downloadBtn.className = 'btn btn-danger';
+                    downloadBtn.style.background = '#dc3545';
+                    downloadBtn.style.color = '#fff';
+                    setTimeout(() => {
+                      downloadBtn.textContent = 'Download Channel Share';
+                      downloadBtn.className = 'btn btn-success';
+                      downloadBtn.style.background = 'linear-gradient(90deg,#43e97b,#53a0fd)';
+                      downloadBtn.style.color = '#fff';
+                    }, 1800);
+                    return;
+                  }
+                  XLSX.writeFile(wb, 'Channel_Share_Output.xlsx', {bookType: 'xlsx', cellDates: true});
+                }
+                if(typeof XLSX === 'undefined') {
+                  const script = document.createElement('script');
+                  script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+                  script.onload = function() { setTimeout(runDownload, 100); };
+                  document.body.appendChild(script);
+                  return;
+                }
+                runDownload();
+              };
+            }
+            // Dashboard button logic
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            if(dashboardBtn) {
+              // Add modal if not present
+              if(!document.getElementById('dashboardModal')) {
+                const modalDiv = document.createElement('div');
+                modalDiv.id = 'dashboardModal';
+                modalDiv.innerHTML = `
+                  <div class="modal fade" tabindex="-1" id="dashboardModalDialog">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                      <div class="modal-content" style="border-radius:14px; background:#fff; box-shadow:0 2px 16px 0 #23252622;">
+                        <div class="modal-header d-flex align-items-center justify-content-between" style="background:#fff; color:#232526; border-top-left-radius:14px; border-top-right-radius:14px; border-bottom:1px solid #f3f3f3;">
+                          <h5 class="modal-title" style="font-weight:700; letter-spacing:1.2px; font-size:1.18rem;">T-sHARE Dashboard</h5>
+                          <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="border:none; background:none; padding:0; margin-left:8px;">
+                            <span class="bi bi-x-lg" style="font-size:1.5rem; color:#dc3545;"></span>
+                          </button>
+                        </div>
+                        <div class="modal-body" style="background:#fafbfc;">
+                          <div class="row g-3 align-items-center mb-2" style="margin-bottom:0 !important;">
+                            <div class="col-12 d-flex flex-row flex-wrap align-items-stretch justify-content-center" style="gap:32px; padding:0 32px;">
+                              <div class="d-flex flex-column align-items-start justify-content-center card-region-top p-3" style="border-radius:14px; background:#fff; box-shadow:0 2px 8px 0 #23252611; min-width:260px; max-width:340px; border:1px solid #f3f3f3; padding:24px 32px; gap:12px; margin-bottom:12px;">
+                                <label for="regionSelect" class="form-label mb-0" style="color:#232526; font-weight:600; margin-bottom:8px;">Select Region</label>
+                                <select id="regionSelect" class="form-select" style="max-width:220px;"></select>
+                              </div>
+                              <div class="d-flex flex-column align-items-start justify-content-center card-top-channel p-3" style="border-radius:14px; background:#fff; box-shadow:0 2px 8px 0 #23252611; min-width:260px; max-width:340px; border:1px solid #f3f3f3; padding:24px 32px; gap:12px; margin-bottom:12px;">
+                                <div class="fw-bold" style="color:#232526; font-size:1.05rem; margin-bottom:4px; letter-spacing:1px;">Top Channel</div>
+                                <div id="topChannel" style="font-size:1.05rem; color:#0078d4; font-weight:700; margin-bottom:0;"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row g-3 justify-content-center align-items-center" style="margin-top:-12px;">
+                            <div class="col-12" style="padding-left:32px; padding-right:32px;">
+                              <div class="fixed-chart-container" style="max-width:700px; height:320px; margin-bottom:16px; background:#fff; box-shadow:0 2px 8px #23252611; border:1px solid #f3f3f3; margin-left:auto; margin-right:auto;">
+                                <canvas id="hBarChart"></canvas>
+                              </div>
+                              <h6 class="text-center mt-3 mb-0" style="font-weight:600; color:#232526; letter-spacing:1px; font-size:1rem;">Top 5 Channels</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                document.body.appendChild(modalDiv);
+              }
+              dashboardBtn.onclick = function() {
+                // Use processed data from uploads
+                if (!window.barcDumpData || window.barcDumpData.length === 0) {
+                  alert('Please process and upload both files before viewing dashboard.');
+                  return;
+                }
+                // Group data by region, filter out 'total' rows
+                const regionGroups = {};
+                window.barcDumpData.forEach(row => {
+                  const channelVal = (row.Channel || '').trim().toLowerCase();
+                  const brandVal = (row.Brand || '').trim().toLowerCase();
+                  const regionsVal = (row.Regions || '').trim().toLowerCase();
+                  if(channelVal === 'total' || brandVal === 'total' || regionsVal === 'total') return;
+                  const region = (row.Regions || '').trim();
+                  if (!regionGroups[region]) regionGroups[region] = [];
+                  regionGroups[region].push(row);
+                });
+                const regions = Object.keys(regionGroups);
+                const regionSelect = document.getElementById('regionSelect');
+                regionSelect.innerHTML = regions.map(r => `<option value="${r}">${r}</option>`).join('');
+                const modal = new bootstrap.Modal(document.getElementById('dashboardModalDialog'));
+                document.getElementById('dashboardModalDialog').addEventListener('hidden.bs.modal', function() {
+                  if(window._dashboardChartObj) { window._dashboardChartObj.destroy(); window._dashboardChartObj = null; }
+                  if(window._pieChartObj) { window._pieChartObj.destroy(); window._pieChartObj = null; }
+                });
+                modal.show();
+                function renderChart(region) {
+                  const rows = regionGroups[region] || [];
+                  // Sort rows by Brand descending, then take top 5
+                  const sortedRows = [...rows].sort((a, b) => (parseFloat(b.Brand) || 0) - (parseFloat(a.Brand) || 0));
+                  const topRows = sortedRows.slice(0, 5);
+                  let labels = topRows.map(row => row.Channel);
+                  let brandData = topRows.map(row => parseFloat(row.Brand) || 0);
+                  let buyingData = topRows.map(row => parseFloat(row.Buying) || 0);
+                  let m15Data = topRows.map(row => parseFloat(row["M15+"]) || 0);
+                  // Top channel card
+                  const topIdx = 0;
+                  const topRow = topRows[topIdx] || {};
+                  document.getElementById('topChannel').innerHTML = labels[topIdx]
+                    ? `<div style='font-weight:700; color:#0078d4; font-size:1.05rem; margin-bottom:2px;'>${labels[topIdx]}</div>
+                       <div style='font-size:0.97rem; color:#232526; font-weight:500; margin-bottom:2px;'>Brand: <span style='color:#0078d4;'>${topRow.Brand}</span> &nbsp; Buying: <span style='color:#0078d4;'>${topRow.Buying}</span> &nbsp; M15+: <span style='color:#0078d4;'>${topRow["M15+"]}</span></div>`
+                    : '-';
+                  // Horizontal bar chart for Brand, Buying, M15+
+                  const hBarEl = document.getElementById('hBarChart');
+                  const hBarCtx = hBarEl.getContext('2d');
+                  if(window._hBarChartObj) { window._hBarChartObj.destroy(); window._hBarChartObj = null; }
+                  window._hBarChartObj = new Chart(hBarCtx, {
+                    type: 'bar',
+                    data: {
+                      labels: labels,
+                      datasets: [
+                        { label: 'Brand', data: brandData, backgroundColor: '#0078d4' },
+                        { label: 'Buying', data: buyingData, backgroundColor: '#00bfae' },
+                        { label: 'M15+', data: m15Data, backgroundColor: '#f2c811' }
+                      ]
+                    },
+                    options: {
+                      indexAxis: 'y',
+                      responsive: true,
+                      plugins: {
+                        legend: { position: 'top', labels: { font: { size: 13, family: 'Montserrat, Arial, sans-serif', weight: '600' }, color: '#232526' } },
+                        title: { display: false }
+                      },
+                      scales: {
+                        x: { beginAtZero: true, title: { display: true, text: 'Value' }, grid: { color: '#f3f3f3' }, ticks: { color: '#232526', stepSize: 1 } },
+                        y: {
+                          ticks: {
+                            font: { size: 12, family: 'Montserrat, Arial, sans-serif', weight: '600' },
+                            color: '#0078d4',
+                            padding: 6
+                          },
+                          grid: { color: '#f3f3f3' }
+                        }
+                      },
+                      maintainAspectRatio: false,
+                      layout: { padding: 8 },
+                    elements: {
+                      bar: {
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        borderWidth: 0,
+                        barThickness: 56
+                      }
+                    }
+                    }
+                  });
+                }
+                function ensureChartLoaded(callback) {
+                  if(typeof Chart !== 'undefined') {
+                    callback();
+                  } else {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+                    script.onload = function() { setTimeout(callback, 100); };
+                    document.body.appendChild(script);
+                  }
+                }
+                ensureChartLoaded(function() {
+                  renderChart(regionSelect.value);
+                  regionSelect.onchange = function() { renderChart(regionSelect.value); };
+                });
+              };
+            }
+          }, 0);
+        }
+        // Step 3: Store selected columns globally for use in Step 4
+        if(idx === 3) {
+          setTimeout(() => {
+            const form = document.getElementById('outputColumnsForm');
+            if(form) {
+              form.onchange = () => {
+                const selectedCols = [];
+                ['colGenre','colSubGenre','colRegion','colBroadGenre','colFtaNfta'].forEach(id => {
+                  const el = document.getElementById(id);
+                  if(el && el.checked) selectedCols.push(el.value);
+                });
+                window.selectedGenreCols = selectedCols;
+              };
+              // Initialize on load
+              form.onchange();
+            }
+          }, 0);
+        }
+        const card = cards[idx];
+        document.getElementById('workflowCard').innerHTML = `
+          <span class='step-indicator' style='${card.indicatorStyle}'>${card.step}</span>
+          <span style='font-size:2rem; background:linear-gradient(120deg,#7f53ac 0%,#e570e7 60%,#53a0fd 100%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; display:inline-block; margin:0 auto 0.7rem auto;'>${card.icon}</span>
+          <div class='card-title'>${card.title}</div>
+          <div class='tool-desc'>${card.desc}</div>
+          ${card.list}
+          ${card.extra}
+        `;
+        if(document.getElementById('nextBtn')) {
+          document.getElementById('nextBtn').onclick = () => { if(current < cards.length-1) { current++; renderCard(current); } };
+        }
+        if(document.getElementById('prevBtn')) {
+          document.getElementById('prevBtn').onclick = () => { if(current > 0) { current--; renderCard(current); } };
+        }
+        // Step 1: Upload Genre Lookup Sheet UI & Drag/Drop
+        if(idx === 1) {
+          setTimeout(() => {
+            const uploadArea = document.getElementById('genreUploadArea');
+            const fileInput = document.getElementById('genreFileInput');
+            const fileNameSpan = document.getElementById('genreFileName');
+            const processBtn = document.getElementById('processGenreBtn');
+            if(!uploadArea || !fileInput || !fileNameSpan || !processBtn) return;
+            uploadArea.onclick = (e) => {
+              if(e.target.id !== 'genreFileName') fileInput.click();
+            };
+            fileInput.onchange = (e) => {
+              if(e.target.files.length) {
+                fileNameSpan.textContent = e.target.files[0].name;
+                processBtn.textContent = 'Process';
+                processBtn.className = 'btn btn-warning';
+                processBtn.style.background = '#ffc107';
+                processBtn.style.color = '#fff';
+              }
+            };
+            uploadArea.addEventListener('dragover', function(e) {
+              e.preventDefault();
+              uploadArea.classList.add('border-primary');
+            });
+            uploadArea.addEventListener('dragleave', function(e) {
+              e.preventDefault();
+              uploadArea.classList.remove('border-primary');
+            });
+            uploadArea.addEventListener('drop', function(e) {
+              e.preventDefault();
+              uploadArea.classList.remove('border-primary');
+              if(e.dataTransfer.files.length) {
+                const dt = new DataTransfer();
+                dt.items.add(e.dataTransfer.files[0]);
+                fileInput.files = dt.files;
+                fileNameSpan.textContent = e.dataTransfer.files[0].name;
+                processBtn.textContent = 'Process Lookup Sheet';
+                processBtn.className = 'btn btn-warning';
+                processBtn.style.background = '#ffc107';
+                processBtn.style.color = '#fff';
+              }
+            });
+            // Helper to process file after SheetJS is loaded
+            function processGenreFile(file) {
+              const requiredHeaders = ['Channel','Region','Genre','Sub-Genre','Broad-Genre','FTA/NFTA'];
+              if(!file) {
+                processBtn.textContent = 'Error: No file uploaded';
+                processBtn.className = 'btn btn-danger';
+                processBtn.style.background = '#dc3545';
+                processBtn.style.color = '#fff';
+                return;
+              }
+              processBtn.textContent = 'Processing...';
+              processBtn.className = 'btn btn-warning';
+              processBtn.style.background = '#ffc107';
+              processBtn.style.color = '#fff';
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                let headers = [];
+                let genreRows = [];
+                let isCSV = file.name.toLowerCase().endsWith('.csv');
+                if(isCSV) {
+                  const lines = e.target.result.split(/\r?\n/);
+                  headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+                  for(let i=1; i<lines.length; i++) {
+                    const row = lines[i].split(',');
+                    if(row.length === headers.length) {
+                      const obj = {};
+                      headers.forEach((h, idx) => { obj[h] = row[idx] ? row[idx].trim() : ''; });
+                      genreRows.push(obj);
+                    }
+                  }
+                } else {
+                  if(typeof XLSX === 'undefined') {
+                    // SheetJS not loaded, load and then re-run this function
+                    if(!window._sheetjsLoading) {
+                      window._sheetjsLoading = true;
+                      const script = document.createElement('script');
+                      script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+                      script.onload = function() {
+                        window._sheetjsLoaded = true;
+                        setTimeout(() => { processGenreFile(file); }, 100);
+                      };
+                      document.body.appendChild(script);
+                    }
+                    return;
+                  }
+                  const data = new Uint8Array(e.target.result);
+                  const workbook = XLSX.read(data, {type:'array'});
+                  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                  const rows = XLSX.utils.sheet_to_json(sheet, {header:1});
+                  let headerRowIdx = -1;
+                  for(let i=0; i<Math.min(rows.length,10); i++) {
+                    if(Array.isArray(rows[i]) && rows[i].filter(cell => cell && cell.toString().trim()).length > 0) {
+                      // Heuristic: header row must contain 'Channel'
+                      if(rows[i].includes('Channel')) {
+                        headerRowIdx = i;
+                        break;
+                      }
+                    }
+                  }
+                  if(headerRowIdx === -1) {
+                    processBtn.textContent = 'Error - Missing Headers';
+                    processBtn.className = 'btn btn-danger';
+                    processBtn.style.background = '#dc3545';
+                    processBtn.style.color = '#fff';
+                    return;
+                  }
+                  headers = rows[headerRowIdx].map(h => h ? h.toString().trim() : '');
+                  for(let i=headerRowIdx+1; i<rows.length; i++) {
+                    const row = rows[i];
+                    if(row.length === headers.length) {
+                      const obj = {};
+                      headers.forEach((h, idx) => { obj[h] = row[idx] ? row[idx].toString().trim() : ''; });
+                      genreRows.push(obj);
+                    }
+                  }
+                }
+                const normalizedHeaders = headers.map(h => h.trim());
+                const missing = requiredHeaders.filter(h => !normalizedHeaders.includes(h));
+                if(missing.length === 0) {
+                  processBtn.textContent = 'Processed';
+                  processBtn.className = 'btn btn-success';
+                  processBtn.style.background = '#28a745';
+                  processBtn.style.color = '#fff';
+                  window.genreLookupData = genreRows;
+                } else {
+                  processBtn.textContent = 'Error - Missing Headers';
+                  processBtn.className = 'btn btn-danger';
+                  processBtn.style.background = '#dc3545';
+                  processBtn.style.color = '#fff';
+                  window.genreLookupData = null;
+                }
+              };
+              let isCSV = file.name.toLowerCase().endsWith('.csv');
+              if(isCSV) {
+                reader.readAsText(file);
+              } else {
+                reader.readAsArrayBuffer(file);
+              }
+            }
+            processBtn.onclick = () => {
+              const file = fileInput.files[0];
+              processGenreFile(file);
+            };
+          }, 0);
+        }
+        // Step 2: Upload BARC Dump Sheet UI & Drag/Drop
+        if(idx === 2) {
+          setTimeout(() => {
+            const uploadArea = document.getElementById('barcUploadArea');
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.xlsx,.csv';
+            fileInput.style.display = 'none';
+            uploadArea.appendChild(fileInput);
+            const fileNameSpan = document.getElementById('barcFileName');
+            const processBtn = document.getElementById('processBarcBtn');
+            if(!uploadArea || !fileInput || !fileNameSpan || !processBtn) return;
+            uploadArea.onclick = (e) => {
+              if(e.target.id !== 'barcFileName') fileInput.click();
+            };
+            fileInput.onchange = (e) => {
+              if(e.target.files.length) {
+                fileNameSpan.textContent = e.target.files[0].name;
+                processBtn.textContent = 'Process';
+                processBtn.className = 'btn btn-warning';
+                processBtn.style.background = '#ffc107';
+                processBtn.style.color = '#fff';
+              }
+            };
+            uploadArea.addEventListener('dragover', function(e) {
+              e.preventDefault();
+              uploadArea.classList.add('border-primary');
+            });
+            uploadArea.addEventListener('dragleave', function(e) {
+              e.preventDefault();
+              uploadArea.classList.remove('border-primary');
+            });
+            uploadArea.addEventListener('drop', function(e) {
+              e.preventDefault();
+              uploadArea.classList.remove('border-primary');
+              if(e.dataTransfer.files.length) {
+                const dt = new DataTransfer();
+                dt.items.add(e.dataTransfer.files[0]);
+                fileInput.files = dt.files;
+                fileNameSpan.textContent = e.dataTransfer.files[0].name;
+                processBtn.textContent = 'Process BARC Dump';
+                processBtn.className = 'btn btn-warning';
+                processBtn.style.background = '#ffc107';
+                processBtn.style.color = '#fff';
+              }
+            });
+            // Helper to process file after SheetJS is loaded
+            function processBarcFile(file) {
+              const requiredHeaders = ['Channel','Regions','Buying','M15+','Brand'];
+              if(!file) {
+                processBtn.textContent = 'Error: No file uploaded';
+                processBtn.className = 'btn btn-danger';
+                processBtn.style.background = '#dc3545';
+                processBtn.style.color = '#fff';
+                return;
+              }
+              processBtn.textContent = 'Processing...';
+              processBtn.className = 'btn btn-warning';
+              processBtn.style.background = '#ffc107';
+              processBtn.style.color = '#fff';
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                let headers = [];
+                let barcRows = [];
+                let isCSV = file.name.toLowerCase().endsWith('.csv');
+                if(isCSV) {
+                  const lines = e.target.result.split(/\r?\n/);
+                  headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+                  for(let i=1; i<lines.length; i++) {
+                    const row = lines[i].split(',');
+                    if(row.length === headers.length) {
+                      const obj = {};
+                      headers.forEach((h, idx) => { obj[h] = row[idx] ? row[idx].trim() : ''; });
+                      barcRows.push(obj);
+                    }
+                  }
+                } else {
+                  if(typeof XLSX === 'undefined') {
+                    if(!window._sheetjsLoading) {
+                      window._sheetjsLoading = true;
+                      const script = document.createElement('script');
+                      script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+                      script.onload = function() {
+                        window._sheetjsLoaded = true;
+                        setTimeout(() => { processBarcFile(file); }, 100);
+                      };
+                      document.body.appendChild(script);
+                    }
+                    return;
+                  }
+                  const data = new Uint8Array(e.target.result);
+                  const workbook = XLSX.read(data, {type:'array'});
+                  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                  const rows = XLSX.utils.sheet_to_json(sheet, {header:1});
+                  let headerRowIdx = -1;
+                  for(let i=0; i<Math.min(rows.length,10); i++) {
+                    if(Array.isArray(rows[i]) && rows[i].filter(cell => cell && cell.toString().trim()).length > 0) {
+                      if(rows[i].includes('Channel')) {
+                        headerRowIdx = i;
+                        break;
+                      }
+                    }
+                  }
+                  if(headerRowIdx === -1) {
+                    processBtn.textContent = 'Error - Missing Headers';
+                    processBtn.className = 'btn btn-danger';
+                    processBtn.style.background = '#dc3545';
+                    processBtn.style.color = '#fff';
+                    return;
+                  }
+                  headers = rows[headerRowIdx].map(h => h ? h.toString().trim() : '');
+                  for(let i=headerRowIdx+1; i<rows.length; i++) {
+                    const row = rows[i];
+                    if(row.length === headers.length) {
+                      const obj = {};
+                      headers.forEach((h, idx) => { obj[h] = row[idx] ? row[idx].toString().trim() : ''; });
+                      barcRows.push(obj);
+                    }
+                  }
+                }
+                const normalizedHeaders = headers.map(h => h.trim());
+                const missing = requiredHeaders.filter(h => !normalizedHeaders.includes(h));
+                if(missing.length === 0) {
+                  processBtn.textContent = 'Processed';
+                  processBtn.className = 'btn btn-success';
+                  processBtn.style.background = '#28a745';
+                  processBtn.style.color = '#fff';
+                  window.barcDumpData = barcRows;
+                } else {
+                  processBtn.textContent = 'Error - Missing Headers';
+                  processBtn.className = 'btn btn-danger';
+                  processBtn.style.background = '#dc3545';
+                  processBtn.style.color = '#fff';
+                  window.barcDumpData = null;
+                }
+              };
+              let isCSV = file.name.toLowerCase().endsWith('.csv');
+              if(isCSV) {
+                reader.readAsText(file);
+              } else {
+                reader.readAsArrayBuffer(file);
+              }
+            }
+            processBtn.onclick = () => {
+              const file = fileInput.files[0];
+              processBarcFile(file);
+            };
+          }, 0);
+        }
+      }
+      renderCard(current);
+    </script>
+  </main>
+  <footer class="text-white text-center" style="background: #fff; width:100%; height:48px; display:flex; align-items:center; left: 0; bottom: 0; z-index:1040;">
+    <div class="container-fluid">
+      <span class="footer-text text-dark" style="font-size:10px; padding-top:2px; display:inline-block;">&copy; 2025 T-bOLT Media Planning Hub. All rights reserved.</span>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Brand logo gradient hover effect (only logo changes)
+    document.addEventListener('DOMContentLoaded', function() {
+      var brand = document.querySelector('.brand-gradient-hover');
+      var logoPath = document.getElementById('logoPath');
+      brand.addEventListener('mouseenter', function() {
+        logoPath.setAttribute('fill', 'url(#logoGradientYellow)');
+      });
+      brand.addEventListener('mouseleave', function() {
+        logoPath.setAttribute('fill', 'url(#logoGradientPurple)');
+      });
+    });
+    document.getElementById('logoutBtn').onclick = function() {
+      window.location.href = 'login.html';
+    };
+  </script>
+</body>
+</html>
